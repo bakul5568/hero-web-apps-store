@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 const HomeApp = ({singleApp}) => {
     const { title, companyName,id, ratings, image, downloads } = singleApp;
     return (
-        <Link to={`/HomeAppDetails/${id}`}>
+        <Link to={`/HomeAppsDetails/${id}`}>
        <div className="card bg-base-300 p-3 w-70 shadow-sm">
       <figure>
         <img className="w-[250px] h-[250px]" src={image} alt="App" />

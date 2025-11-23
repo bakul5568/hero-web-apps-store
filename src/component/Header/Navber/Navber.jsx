@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
-import logo from '../../../assets/logo.png'
-import github from '../../../assets/github.png'
+import logo from '../../../assets/logo.png';
+import github from '../../../assets/github.png';
+
 
 const Navber = () => {
     const links = <>
