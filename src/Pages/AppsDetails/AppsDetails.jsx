@@ -13,13 +13,17 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { ToastContainer, toast } from 'react-toastify';
+import AppErrorPage from "../AppErrorPage/AppErrorPage";
 
 const AppsDetails = () => {
   const { id } = useParams();
   const { apps, loading } = useApps();
   const [isInstalled, setIsInstalled] = useState(false);
+  console.log(apps)
 const singleApp = apps.find((app) => String(app.id) === id);
-  
+  console.log(singleApp)
+
  useEffect(() => {
     const installationList =
       JSON.parse(localStorage.getItem("installation")) || [];
@@ -27,7 +31,7 @@ const singleApp = apps.find((app) => String(app.id) === id);
       (p) => p.id === singleApp?.id
     );
     setIsInstalled(alreadyInstalled);
-  }, [singleApp]);
+}, [singleApp,]);
 
   const handleAddToInstalation = () => {
     const installationList =
@@ -41,10 +45,14 @@ const singleApp = apps.find((app) => String(app.id) === id);
     localStorage.setItem("installation", JSON.stringify(updatedList));
 
     setIsInstalled(true);
+    toast.success("Installed")
   };
 
-  
+ 
   if (loading) return <p> Loading.....</p>;
+  if(!singleApp){
+    return <AppErrorPage></AppErrorPage>
+ }
   const {
     image,
     title,
@@ -57,6 +65,7 @@ const singleApp = apps.find((app) => String(app.id) === id);
 
     ratingAvg,
   } = singleApp || {};
+
   const colors = ["#ff9000", "#ff9000", "#ff9000", "#ff9000", "#ff9000"];
 
   return (
@@ -104,6 +113,7 @@ const singleApp = apps.find((app) => String(app.id) === id);
           >
             {isInstalled ? "Installed" : `Install Now (${size}MB)`}
           </button>
+          {/* <ToastContainer/> */}
         </div>
       </div>
 
