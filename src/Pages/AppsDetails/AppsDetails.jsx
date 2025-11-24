@@ -1,8 +1,9 @@
-import React from "react";
-import reviewImg from "../../assets/icon-review.png";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
+import useApps from "../../Hooks/useApps";
 import downloadImg from "../../assets/icon-downloads.png";
 import ratingImg from "../../assets/icon-ratings.png";
-import { useLoaderData, useParams } from "react-router";
+import reviewImg from "../../assets/icon-review.png";
 import {
   Bar,
   BarChart,
@@ -13,11 +14,37 @@ import {
   YAxis,
 } from "recharts";
 
-const HomeAppsDetails = () => {
+const AppsDetails = () => {
   const { id } = useParams();
-  const appId = parseInt(id);
-  const data = useLoaderData();
-  const singleAppdetails = data.find((App) => App.id === appId);
+  const { apps, loading } = useApps();
+  const [isInstalled, setIsInstalled] = useState(false);
+const singleApp = apps.find((app) => String(app.id) === id);
+  
+ useEffect(() => {
+    const installationList =
+      JSON.parse(localStorage.getItem("installation")) || [];
+    const alreadyInstalled = installationList.some(
+      (p) => p.id === singleApp?.id
+    );
+    setIsInstalled(alreadyInstalled);
+  }, [singleApp]);
+
+  const handleAddToInstalation = () => {
+    const installationList =
+      JSON.parse(localStorage.getItem("installation")) || [];
+
+    const isDuplicate = installationList.some((p) => p.id === singleApp.id);
+    if (isDuplicate) return;
+
+    const updatedList = [...installationList, singleApp];
+
+    localStorage.setItem("installation", JSON.stringify(updatedList));
+
+    setIsInstalled(true);
+  };
+
+  
+  if (loading) return <p> Loading.....</p>;
   const {
     image,
     title,
@@ -29,8 +56,9 @@ const HomeAppsDetails = () => {
     size,
 
     ratingAvg,
-  } = singleAppdetails;
+  } = singleApp || {};
   const colors = ["#ff9000", "#ff9000", "#ff9000", "#ff9000", "#ff9000"];
+
   return (
     <div className="max-w-6xl my-10 mx-auto">
       <div className="flex gap-8 ">
@@ -41,7 +69,7 @@ const HomeAppsDetails = () => {
           <h1 className=" font-bold text-[30px] ">
             {companyName}: {title}
           </h1>
-          <p className="font-[400px] text-[#627382] text-[15px] my-3 ">
+          <p className=" font-[400px] text-[#627382] text-[15px] my-3 ">
             Developed by{" "}
             <span className="text-[15px] text-purple-600 font-[400px]">
               {companyName}.io
@@ -65,8 +93,16 @@ const HomeAppsDetails = () => {
               <p className=" font-extrabold text-[30px]  ">{reviews}</p>
             </div>
           </div>
-          <button className="btn text-white bg-[#00D390] m-0 sm:btn-sm md:btn-md lg:btn-lg font-semibold text-[20px] xl:btn-xl">
-            Install Now ({size}MB)
+          <button
+            onClick={handleAddToInstalation}
+            disabled={isInstalled}
+            className={`btn m-0 sm:btn-sm md:btn-md lg:btn-lg font-semibold text-[20px] xl:btn-xl ${
+              isInstalled
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#00D390] text-white"
+            }`}
+          >
+            {isInstalled ? "Installed" : `Install Now (${size}MB)`}
           </button>
         </div>
       </div>
@@ -77,7 +113,7 @@ const HomeAppsDetails = () => {
         <div className="w-full h-[250px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={[...ratings].reverse()}
+              data={[...(ratings || [])].reverse()}
               layout="vertical"
               margin={{ top: 10, right: 20, left: 40, bottom: 10 }}
             >
@@ -85,7 +121,7 @@ const HomeAppsDetails = () => {
               <YAxis dataKey="name" type="category" />
               <Tooltip />
               <Bar dataKey="count" barSize={20}>
-                {[...ratings].reverse().map((entry, index) => (
+                {[...(ratings || [])].reverse().map((entry, index) => (
                   <Cell key={index} fill={colors[index]} />
                 ))}
               </Bar>
@@ -103,4 +139,4 @@ const HomeAppsDetails = () => {
   );
 };
 
-export default HomeAppsDetails;
+export default AppsDetails;

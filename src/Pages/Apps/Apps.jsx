@@ -3,7 +3,7 @@ import useApps from '../../Hooks/useApps';
 import App from '../App/App';
 
 const Apps = () => {
-   const { apps, loading } = useApps();
+   const { apps } = useApps();
    console.log(apps)
 
   const [search, setSearch] = useState("");

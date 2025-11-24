@@ -6,6 +6,10 @@ import HomeErrorPage from '../Pages/HomeErrorPage/HomeErrorPage';
 import HomeAppsDetails from '../Pages/HomeAppsDetails/HomeAppsDetails';
 import Apps from '../Pages/Apps/Apps';
 
+import AppErrorPage from '../Pages/AppErrorPage/AppErrorPage';
+import AppsDetails from '../Pages/AppsDetails/AppsDetails';
+import Installation from '../Pages/Installation/Installation';
+
 
  export const router = createBrowserRouter([
   {
@@ -21,13 +25,23 @@ import Apps from '../Pages/Apps/Apps';
         },
         {
             path:'/HomeAppsDetails/:id',
+        
             loader: () => fetch('../HomeApps.json'),
             Component: HomeAppsDetails
         },
-       {
-        path:'/Apps',
-        Component:Apps
-       }
+        {
+          path:'/Apps',
+          Component:Apps
+        },
+        {
+          path:'/AppsDetails/:id',
+          Component:AppsDetails
+          
+        },
+        {
+            path:'/Installation',
+            Component:Installation
+        }
     ]
   },
 ]);
