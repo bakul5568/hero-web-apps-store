@@ -19,7 +19,7 @@ import HomeAppDetails from '../Pages/HomeAppDetails/HomeAppDetails';
         {
             index:true,
             path:'/',
-            loader: () => fetch('../HomeApps.json'),
+            loader: () => fetch('/HomeApps.json'),
             Component:Home
         },
         {
@@ -38,7 +38,7 @@ import HomeAppDetails from '../Pages/HomeAppDetails/HomeAppDetails';
         },
         {
             path:'/HomeAppDetails/:id',
-            loader: () => fetch('../HomeApps.json'),
+            loader: () => fetch('/HomeApps.json'),
             Component:HomeAppDetails
 
         }
