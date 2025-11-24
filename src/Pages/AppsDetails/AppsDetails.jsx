@@ -98,7 +98,7 @@ const singleApp = apps.find((app) => String(app.id) === id);
             disabled={isInstalled}
             className={`btn m-0 sm:btn-sm md:btn-md lg:btn-lg font-semibold text-[20px] xl:btn-xl ${
               isInstalled
-                ? "bg-gray-400 cursor-not-allowed"
+                ? "bg-[#00D390] text-white cursor-not-allowed"
                 : "bg-[#00D390] text-white"
             }`}
           >

@@ -4,7 +4,7 @@ import App from '../App/App';
 
 const Apps = () => {
    const { apps } = useApps();
-   console.log(apps)
+   
 
   const [search, setSearch] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
