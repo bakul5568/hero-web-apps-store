@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import useApps from '../../Hooks/useApps';
 import App from '../App/App';
+import { Link } from 'react-router';
 
 const Apps = () => {
    const { apps } = useApps();
@@ -64,9 +65,10 @@ const Apps = () => {
           <p className="text-center text-xl">Searching...</p>
         </div>
       ) : searchedApps.length === 0 ? (
-        <p className="text-center text-xl mt-10 text-red-500 font-semibold">
-           No App Found
-        </p>
+        <div className="text-center text-xl mb-20 mt-10 font-semibold">
+           <p className=' text-red-500 font-bold text-[35px]'> No App Pound </p>
+           <Link to='/'><button className='btn bg-purple-600 text-white mt-3'>Show Home Page</button></Link>
+        </div>
       ) : (
         <div className="grid gap-5 grid-cols-2 md:grid-cols-4 ml-10 md:ml-0 mt-5">
           {searchedApps.map((app) => (

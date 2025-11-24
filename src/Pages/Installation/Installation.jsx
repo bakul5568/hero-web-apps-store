@@ -12,6 +12,23 @@ const Installation = () => {
     if (saveInstalled) setInstallation(saveInstalled);
   }, []);
 
+
+  const [loading, setLoading] = useState(true)
+  
+      useEffect(() =>{
+          const timer = setTimeout(() => {
+              setLoading(false);
+          }, 1000 );
+          return () => clearTimeout(timer);
+      }, []);
+      if (loading) {
+          return (
+              <div className="w-full h-screen flex justify-center items-center">
+                  <h2 className="text-2xl font-semibold">Loading...</h2>
+              </div>
+          );
+      }
+
   const sortedItem = () => {
     if (sortOrder === "download-ase") {
       return [...installation].sort((a, b) => b.downloads - a.downloads);
